@@ -41,8 +41,8 @@ KEY_CONFIG_USE_SSL = "use_ssl"
 KEY_CONFIG_VERIFY_CERTS = "verify_certs"
 KEY_CONFIG_FIELDS = "fields"
 KEY_CONFIG_SOURCE_TYPE = "stype"
-KEY_CONFIG_LATEST = "latest"
-KEY_CONFIG_EARLIEST = "earliest"
+KEY_CONFIG_LATEST = "latesttime"
+KEY_CONFIG_EARLIEST = "earliesttime"
 KEY_CONFIG_SCAN = "scan"
 KEY_CONFIG_INDEX = "index"
 KEY_CONFIG_INCLUDE_ES = "include_es"
@@ -78,9 +78,9 @@ class ElasticSplunk(GeneratingCommand):
     include_raw = Option(require=False, default=False, doc="Include event source")
     use_ssl = Option(require=False, default=None, doc="Use SSL")
     verify_certs = Option(require=False, default=None, doc="Verify SSL Certificates")
-    earliest = Option(require=False, default=None,
+    earliesttime = Option(require=False, default=None,
                       doc="Earliest event, format relative eg. now-4h or 2016-11-18T23:45:00")
-    latest = Option(require=False, default=None,
+    latesttime = Option(require=False, default=None,
                     doc="Latest event, format 2016-11-17T23:45:00")
 
     @staticmethod
@@ -157,15 +157,15 @@ class ElasticSplunk(GeneratingCommand):
         # source type
         config[KEY_CONFIG_SOURCE_TYPE] = self.stype.split(",") if self.stype else None
 
-        if self.latest:
-            config[KEY_CONFIG_LATEST] = self.parse_dates(self.latest)
+        if self.latesttime:
+            config[KEY_CONFIG_LATEST] = self.parse_dates(self.latesttime)
         elif hasattr(self.search_results_info, KEY_SPLUNK_LATEST):
             config[KEY_CONFIG_LATEST] = int(self.search_results_info.endTime)
         else:
             config[KEY_CONFIG_LATEST] = self.parse_dates(DEFAULT_LATEST)
 
-        if self.earliest:
-            config[KEY_CONFIG_EARLIEST] = config[KEY_CONFIG_LATEST] - self.parse_dates(self.earliest)
+        if self.earliesttime:
+            config[KEY_CONFIG_EARLIEST] = config[KEY_CONFIG_LATEST] - self.parse_dates(self.earliesttime)
         elif hasattr(self.search_results_info, KEY_SPLUNK_EARLIEST):
              config[KEY_CONFIG_EARLIEST] = int(self.search_results_info.startTime)
         else:
