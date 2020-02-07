@@ -165,7 +165,7 @@ class ElasticSplunk(GeneratingCommand):
             config[KEY_CONFIG_LATEST] = self.parse_dates(DEFAULT_LATEST)
 
         if self.earliesttime:
-            config[KEY_CONFIG_EARLIEST] = config[KEY_CONFIG_LATEST] - self.parse_dates(self.earliesttime)
+            config[KEY_CONFIG_EARLIEST] = self.parse_dates(self.earliesttime)
         elif hasattr(self.search_results_info, KEY_SPLUNK_EARLIEST):
              config[KEY_CONFIG_EARLIEST] = int(self.search_results_info.startTime)
         else:
