@@ -29,22 +29,22 @@ When earliest and latest parameters are specified this will be the effective ran
 
 ### Using the Splunk timepicker provided time range
 ```
-|ess eaddr="https://node1:9200,https://node2:9200" index=indexname tsfield="@timestamp" query="field:value AND host:host*"
+|essm eaddr="https://node1:9200,https://node2:9200" index=indexname tsfield="timestamp" query="field:value AND host:host*"
 ```
 
 ### Using the earliest and latest parameters
 ```
-|ess eaddr="https://node1:9200,https://node2:9200" index=indexname tsfield="@timestamp" latest=now earliest="now-24h" query="field:value AND host:host*"
+|essm eaddr="https://node1:9200,https://node2:9200" index=indexname tsfield="timestamp" latesttime=now earliesttime="now-24h" query="field:value AND host:host*"
 ```
 
 ## List indices
 ```
-|ess eaddr="https://node1:9200,https://node2:9200" action=indices-list"
+|essm eaddr="https://node1:9200,https://node2:9200" action=indices-list"
 ```
 
 ## Cluster health
 ```
-|ess eaddr="https://node1:9200,https://node2:9200" action=cluster-health"
+|essm eaddr="https://node1:9200,https://node2:9200" action=cluster-health"
 ```
 
 Written by Bruno Moura <brunotm@gmail.com>
